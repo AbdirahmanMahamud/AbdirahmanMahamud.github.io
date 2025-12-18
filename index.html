@@ -1,83 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Abdirahman Mahamud</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drew Coffman - Bookshelf</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+<body class="p-6 md:p-12 max-w-6xl mx-auto">
 
-<body>
+    <header class="flex justify-between items-center mb-12">
+        <nav class="flex gap-8 uppercase text-sm font-bold tracking-widest">
+            <span class="text-green-800">Drew Coffman</span>
+            <a href="#" class="nav-link">About</a>
+            <a href="#" class="nav-link">Writing</a>
+            <a href="#" class="nav-link">Bookshelf</a>
+        </nav>
+        <div class="header-icon">✳︎</div>
+    </header>
 
-<header>
-  <div class="header-inner">
-    <div class="brand">ABDIRAHMAN MAHAMUD</div>
-    <nav>
-      <a href="#about">ABOUT</a>
-      <a href="#writing">WRITING</a>
-      <a href="#shelf">BOOKSHELF</a>
-    </nav>
-    <button id="theme-toggle">☾</button>
-  </div>
-</header>
+    <section class="mb-16">
+        <img src="images/hero-desk.jpg" alt="Desk Setup" class="hero-image">
+        <div class="section-title">
+            <h2>About Me</h2>
+        </div>
+        <div class="mt-6 space-y-2 about-content">
+            <p>//NOW//</p>
+            <p>- thinking deeply about social and storytelling at <span class="link">Base</span></p>
+            <p>- building <span class="link">Noun</span>, a coffee and wine bar in LA</p>
+        </div>
+    </section>
 
-<main>
+    <section id="bookshelf">
+        <div class="section-title flex justify-between items-end">
+            <h2 class="text-xl">Bookshelf</h2>
+            <span class="text-xs opacity-60">131 BOOKS</span>
+        </div>
 
-  <!-- HERO IMAGE -->
-  <section class="hero">
-    <img src="hero.jpg" alt="">
-  </section>
+        <div class="filter-controls">
+            <span class="opacity-50">Sort:</span>
+            <button class="btn btn-active">All</button>
+            <button class="btn btn-outline">★ Life-Changing</button>
+            <button class="btn btn-outline">♥ Liked</button>
+        </div>
 
-  <!-- ABOUT / WRITING SPLIT -->
-  <section class="two-col">
-    <div id="about">
-      <h2>ABOUT ME</h2>
-      <ul>
-        <li>// now //</li>
-        <li>thinking deeply about ideas & storytelling</li>
-        <li>building things slowly</li>
-      </ul>
-    </div>
+        <h3 class="mb-8 font-bold text-lg">2025</h3>
 
-    <div id="writing">
-      <h2>WRITING</h2>
-      <ul>
-        <li><a href="#">On Discipline</a></li>
-        <li><a href="#">Faith & Doubt</a></li>
-        <li><a href="#">Travel as Education</a></li>
-      </ul>
-    </div>
-  </section>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6" id="book-grid">
+            <div class="book-card bg-red-600 text-white" data-title="No Rules Rules" data-desc="The story of Netflix culture.">
+                <p>NO RULES RULES</p>
+            </div>
+            </div>
+    </section>
 
-  <!-- SHELF -->
-  <section id="shelf">
-    <h2>BOOKSHELF</h2>
+    <div id="book-modal" class="modal hidden">
+        <div class="modal-content">
+            <button id="close-modal" class="close-btn">&times;</button>
+            <div id="modal-body">
+                </div>
+        </div>
+    </div>
 
-    <div class="filters">
-      <button class="active">ALL</button>
-      <button>★ LIFE-CHANGING</button>
-      <button>♥ LIKED</button>
-    </div>
-
-    <div class="grid">
-      <img src="books/chip-war.jpg" data-title="Chip War" data-review="A sharp history of technology power." onclick="openModal(this)">
-    </div>
-  </section>
-
-</main>
-
-<!-- MODAL -->
-<div id="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">×</span>
-    <img id="modal-img">
-    <h3 id="modal-title"></h3>
-    <p id="modal-text"></p>
-  </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
