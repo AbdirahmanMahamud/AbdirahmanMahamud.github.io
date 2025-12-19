@@ -1,73 +1,22 @@
-body {
-    font-family: 'IBM Plex Mono', monospace;
-    background-color: #f8fcf8;
-    color: #2d5a27;
+.column-line { border-bottom: 2px solid #2d5a27; padding-bottom: 8px; margin-bottom: 24px; width: 100%; }
+
+.nav-tab { 
+    cursor: pointer; 
+    padding-bottom: 8px; 
+    border-bottom: 4px solid transparent; 
+    transition: all 0.2s; 
+    opacity: 0.4; 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    font-size: 0.75rem; 
+    letter-spacing: 0.1em; 
 }
 
-.section-title {
-    border-bottom: 2px solid #2d5a27;
-    padding-bottom: 8px;
-    text-transform: uppercase;
-    font-weight: 700;
+.nav-tab-active { 
+    opacity: 1; 
+    border-bottom: 4px solid #2d5a27; 
 }
 
-.hero-image {
-    width: 100%;
-    border: 1px solid #2d5a27;
-    filter: grayscale(20%);
-}
-
-.btn {
-    padding: 4px 16px;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    font-weight: 700;
-    transition: all 0.2s;
-}
-
-.btn-active { background: #2d5a27; color: white; }
-.btn-outline { border: 1px solid #2d5a27; }
-
-.book-card {
-    aspect-ratio: 2/3;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    font-weight: 700;
-    font-size: 0.8rem;
-    cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-}
-
-.book-card:hover { transform: translateY(-5px); }
-
-/* Modal Styles */
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(45, 90, 39, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
-}
-
-.modal.hidden { display: none; }
-
-.modal-content {
-    background: #f8fcf8;
-    padding: 2rem;
-    max-width: 500px;
-    width: 90%;
-    border: 1px solid #2d5a27;
-    position: relative;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.5rem;
+.hidden { 
+    display: none !important; 
 }
