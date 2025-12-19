@@ -26,11 +26,12 @@ html {
     border-bottom: 4px solid #2d5a27; 
 }
 
+/* Strictly hide elements when hidden class is present */
 .hidden { 
     display: none !important; 
 }
 
-/* Added to give links some space so they don't hit the top of the browser exactly */
-.scroll-mt-10 {
-    scroll-margin-top: 2.5rem;
+/* Space for the header so anchors don't cut off text */
+.scroll-mt-20 {
+    scroll-margin-top: 5rem;
 }
