@@ -1,3 +1,4 @@
+/* Core Page Settings */
 html {
     scroll-behavior: smooth;
 }
@@ -6,8 +7,10 @@ body {
     background-color: #f8fcf8;
     color: #2d5a27;
     font-family: 'IBM Plex Mono', monospace;
+    overflow-x: hidden; /* Prevents accidental horizontal shifting */
 }
 
+/* Typography & Layout Elements */
 .column-line { 
     border-bottom: 2px solid #2d5a27; 
     padding-bottom: 8px; 
@@ -15,36 +18,49 @@ body {
     width: 100%; 
 }
 
-/* This is the thin line that goes all the way across */
+/* Tab Navigation Styling */
 .tabs-wrapper {
-    border-bottom: 2px solid #2d5a27;
+    border-bottom: 2px solid #2d5a27; /* The thin full-width line */
     width: 100%;
+    overflow: visible; /* Removes the scroll bar next to the tabs */
+    display: flex;
 }
 
 .nav-tab { 
     cursor: pointer; 
-    padding-bottom: 12px; /* Space between text and underline */
+    padding-bottom: 12px; /* Space between text and the thick underline */
     border-bottom: 6px solid transparent; /* Thick but invisible by default */
     transition: all 0.2s ease; 
     color: #2d5a27;
-    opacity: 0.3; /* Faded when inactive like in your Pic 2 */
+    opacity: 0.3; /* Faded when inactive */
     text-transform: uppercase; 
     font-weight: bold; 
     font-size: 0.75rem; 
     letter-spacing: 0.1em;
-    margin-bottom: -2px; /* This makes it sit perfectly on the wrapper line */
+    margin-bottom: -2px; /* Aligns the thick underline with the wrapper line */
 }
 
-/* This is the thick green bar for the active tab */
+/* Active Tab State */
 .nav-tab-active { 
     opacity: 1; 
-    border-bottom: 6px solid #2d5a27; 
+    border-bottom: 6px solid #2d5a27; /* The thick dark green bar */
 }
 
+/* Utility Classes */
 .hidden { 
     display: none !important; 
 }
 
+/* Ensures sections don't hide behind the header when jumping to them */
 .scroll-mt-24 {
     scroll-margin-top: 6rem;
+}
+
+/* Book Cover Hover Effect (Optional but polished) */
+.shelf-content img {
+    transition: opacity 0.2s ease;
+}
+
+.shelf-content img:hover {
+    opacity: 0.8;
 }
