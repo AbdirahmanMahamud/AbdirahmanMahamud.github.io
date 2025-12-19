@@ -1,31 +1,147 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const tabs = document.querySelectorAll('.nav-tab');
-    const grids = document.querySelectorAll('.shelf-content');
-    const itemCount = document.getElementById('item-count');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drew Coffman - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Style.css">
+    <style>
+        body { 
+            background-color: #f8fcf8; 
+            color: #2d5a27; 
+            font-family: 'IBM Plex Mono', monospace; 
+        }
+        /* Separates the green lines in the About/Writing section */
+        .column-line { 
+            border-bottom: 2px solid #2d5a27; 
+            padding-bottom: 8px; 
+            margin-bottom: 24px; 
+            width: 100%; 
+        }
+        /* Navigation tab styling */
+        .nav-tab { 
+            cursor: pointer; 
+            padding-bottom: 8px; 
+            border-bottom: 4px solid transparent; 
+            transition: all 0.2s; 
+            opacity: 0.4; 
+        }
+        .nav-tab-active { 
+            opacity: 1; 
+            border-bottom: 4px solid #2d5a27; 
+        }
+        .hidden { display: none; }
+        
+        /* Clean search bar styling */
+        #shelf-search {
+            border-radius: 0;
+            -webkit-appearance: none;
+        }
+        #shelf-search::placeholder { 
+            color: #2d5a27; 
+            opacity: 0.4; 
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 max-w-6xl mx-auto">
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            // Update Active Tab UI
-            tabs.forEach(t => t.classList.remove('nav-tab-active'));
-            tab.classList.add('nav-tab-active');
+    <header class="flex flex-col gap-4 mb-12 relative">
+        <div class="flex justify-between items-start">
+            <span class="font-bold uppercase text-sm tracking-widest">DREW COFFMAN</span>
+            <div class="w-8 h-8 border border-[#2d5a27] flex items-center justify-center">✳︎</div>
+        </div>
+        <nav class="flex gap-8 uppercase text-sm font-bold tracking-widest">
+            <a href="#" class="hover:underline">ABOUT</a>
+            <a href="#" class="hover:underline">WRITING</a>
+            <a href="#shelf" class="hover:underline">BOOKSHELF</a>
+        </nav>
+    </header>
 
-            // Hide all grids and show the selected one
-            const targetShelf = tab.getAttribute('data-shelf');
-            grids.forEach(grid => {
-                grid.classList.add('hidden');
-                if (grid.id === `${targetShelf}-grid`) {
-                    grid.classList.remove('hidden');
-                }
-            });
+    <section class="mb-16">
+        <div class="border border-[#2d5a27] overflow-hidden">
+            <img src="Hero%20picture/image_f816a9.jpg" alt="Desk Setup" class="w-full h-auto block">
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mt-12">
+            <div class="flex flex-col">
+                <h2 class="column-line font-bold uppercase">About Me</h2>
+                <div class="text-sm space-y-6">
+                    <div>
+                        <p class="opacity-50 mb-2">//NOW//</p>
+                        <p>- thinking deeply about social and storytelling at <span class="underline">Base</span></p>
+                        <p>- building <span class="underline">Noun</span>, a coffee and wine bar in LA</p>
+                    </div>
+                </div>
+            </div>
 
-            // Update the counter text based on selection
-            const labels = {
-                'books': '131 BOOKS',
-                'movies': '42 MOVIES',
-                'travel': '12 LOCATIONS',
-                'essays': '6 ESSAYS'
-            };
-            itemCount.innerText = labels[targetShelf];
-        });
-    });
-});
+            <div class="flex flex-col">
+                <h2 class="column-line font-bold uppercase">Writing</h2>
+                <div class="space-y-4 text-sm">
+                    <div class="border-b border-[#2d5a27] border-dotted pb-2">
+                        <p class="underline font-bold">essays on being a dad</p>
+                        <p class="text-[10px] opacity-50 uppercase">Paragraph · 2024</p>
+                    </div>
+                    <div class="border-b border-[#2d5a27] border-dotted pb-2">
+                        <p class="underline font-bold">the internet is a portal</p>
+                        <p class="text-[10px] opacity-50 uppercase">Mirror · 2023</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="shelf" class="mt-20">
+        <div class="flex gap-8 md:gap-12 border-b-2 border-[#2d5a27] mb-8 uppercase font-bold text-xs tracking-widest overflow-x-auto whitespace-nowrap">
+            <button class="nav-tab nav-tab-active" data-shelf="books">Bookshelf</button>
+            <button class="nav-tab" data-shelf="movies">Movie Shelf</button>
+            <button class="nav-tab" data-shelf="travel">Travel Log</button>
+            <button class="nav-tab" data-shelf="essays">Essays</button>
+        </div>
+
+        <div class="mb-10 space-y-6">
+            <input type="text" id="shelf-search" placeholder="SEARCH..." 
+                   class="w-full bg-transparent border-b border-[#2d5a27] py-2 outline-none uppercase font-bold text-sm tracking-widest">
+            
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3 text-[10px] font-bold uppercase">
+                    <span class="opacity-50">Filter:</span>
+                    <button class="px-3 py-1 bg-[#2d5a27] text-white">All</button>
+                    <button class="px-3 py-1 border border-[#2d5a27] hover:bg-[#2d5a27] hover:text-white transition-colors">★ Core Texts</button>
+                    <button class="px-3 py-1 border border-[#2d5a27] hover:bg-[#2d5a27] hover:text-white transition-colors">♥ Liked</button>
+                </div>
+                <div id="item-count" class="text-[10px] opacity-50 font-bold uppercase">131 BOOKS</div>
+            </div>
+        </div>
+
+        <div id="books-grid" class="shelf-content grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div class="item-card aspect-[2/3] border border-[#e0eadd] shadow-sm overflow-hidden hover:-translate-y-1 transition-transform cursor-pointer">
+                <img src="Books/TheCosmicSerpent.jpg" alt="The Cosmic Serpent" class="w-full h-full object-cover">
+            </div>
+            </div>
+
+        <div id="movies-grid" class="shelf-content hidden grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div class="item-card aspect-[2/3] border border-[#e0eadd] shadow-sm overflow-hidden bg-black flex items-center justify-center text-white text-[10px]">
+                MOVIE POSTER
+            </div>
+            </div>
+
+        <div id="travel-grid" class="shelf-content hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="border border-[#2d5a27] p-6 text-xs uppercase font-bold">
+                <p class="opacity-50">2024</p>
+                <p class="text-lg">Miami, Florida</p>
+            </div>
+        </div>
+
+        <div id="essays-grid" class="shelf-content hidden space-y-6">
+            <div class="border-b border-[#2d5a27] border-dotted pb-4">
+                <p class="underline font-bold uppercase">The Decentralized Web</p>
+                <p class="text-[10px] opacity-50 uppercase">2023</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="Script.js"></script>
+</body>
+</html>
