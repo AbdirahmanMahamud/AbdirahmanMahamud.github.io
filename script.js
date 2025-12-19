@@ -5,23 +5,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // 1. Update underline on buttons
+            // Update Active Tab Styling
             tabs.forEach(t => t.classList.remove('nav-tab-active'));
             tab.classList.add('nav-tab-active');
 
-            // 2. Hide ALL grids first
-            grids.forEach(grid => {
-                grid.classList.add('hidden');
-            });
+            // Hide all grids
+            grids.forEach(grid => grid.classList.add('hidden'));
             
-            // 3. Show ONLY the one clicked
+            // Show only the selected grid
             const target = tab.getAttribute('data-shelf');
             const targetGrid = document.getElementById(`${target}-grid`);
             if (targetGrid) {
                 targetGrid.classList.remove('hidden');
             }
 
-            // 4. Update the label text
+            // Update Label Count
             const labels = {
                 'books': '131 BOOKS',
                 'movies': '42 MOVIES',
