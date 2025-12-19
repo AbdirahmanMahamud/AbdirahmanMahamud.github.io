@@ -6,22 +6,7 @@
     <title>Drew Coffman - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body { background-color: #f8fcf8; color: #2d5a27; font-family: 'IBM Plex Mono', monospace; }
-        .column-line { border-bottom: 2px solid #2d5a27; padding-bottom: 8px; margin-bottom: 24px; width: 100%; }
-        
-        /* Tab Navigation Fix */
-        .nav-tab { cursor: pointer; padding-bottom: 8px; border-bottom: 4px solid transparent; transition: all 0.2s; opacity: 0.4; text-transform: uppercase; font-weight: bold; font-size: 0.75rem; tracking: 0.1em; }
-        .nav-tab-active { opacity: 1; border-bottom: 4px solid #2d5a27; }
-        
-        /* This prevents the stacking issue */
-        .shelf-content { display: none !important; }
-        .shelf-content.active { display: grid !important; }
-        #essays-grid.active { display: block !important; } 
-
-        #shelf-search::placeholder { color: #2d5a27; opacity: 0.4; }
-    </style>
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body class="p-6 md:p-12 max-w-6xl mx-auto">
 
@@ -65,10 +50,10 @@
 
     <section id="shelf" class="mt-20">
         <div class="flex gap-8 md:gap-12 border-b-2 border-[#2d5a27] mb-8 overflow-x-auto whitespace-nowrap">
-            <button class="nav-tab nav-tab-active" id="tab-books" onclick="switchTab('books')">Bookshelf</button>
-            <button class="nav-tab" id="tab-movies" onclick="switchTab('movies')">Movie Shelf</button>
-            <button class="nav-tab" id="tab-travel" onclick="switchTab('travel')">Travel Log</button>
-            <button class="nav-tab" id="tab-essays" onclick="switchTab('essays')">Essays</button>
+            <button class="nav-tab nav-tab-active" data-shelf="books">Bookshelf</button>
+            <button class="nav-tab" data-shelf="movies">Movie Shelf</button>
+            <button class="nav-tab" data-shelf="travel">Travel Log</button>
+            <button class="nav-tab" data-shelf="essays">Essays</button>
         </div>
 
         <div class="mb-10 space-y-6">
@@ -76,58 +61,39 @@
             <div class="flex justify-between items-center text-[10px] font-bold uppercase">
                 <div class="flex gap-3">
                     <button class="px-3 py-1 bg-[#2d5a27] text-white">All</button>
-                    <button class="px-3 py-1 border border-[#2d5a27]">★ Core</button>
+                    <button class="px-3 py-1 border border-[#2d5a27]">* Core</button>
                 </div>
                 <div id="item-count" class="opacity-50">131 BOOKS</div>
             </div>
         </div>
 
-        <div class="min-h-[500px]">
-            <div id="books-grid" class="shelf-content active grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                <div class="border border-[#2d5a27]/20 aspect-[2/3] overflow-hidden hover:border-[#2d5a27] transition-colors">
-                    <img src="Books/TheCosmicSerpent.jpg" alt="The Cosmic Serpent" class="w-full h-full object-cover">
-                </div>
-                </div>
-
-            <div id="movies-grid" class="shelf-content grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                <div class="aspect-[2/3] bg-[#2d5a27] text-[#f8fcf8] p-4 text-[10px] flex items-center justify-center text-center uppercase font-bold">
-                    [ Movie Poster ]
-                </div>
+        <div id="books-grid" class="shelf-content grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div class="border border-[#2d5a27]/20 aspect-[2/3] overflow-hidden">
+                <img src="Books/TheCosmicSerpent.jpg" alt="The Cosmic Serpent" class="w-full h-full object-cover">
+            </div>
             </div>
 
-            <div id="travel-grid" class="shelf-content grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="border border-[#2d5a27] p-6">
-                    <p class="text-[10px] opacity-40 font-bold uppercase mb-1">2024</p>
-                    <p class="text-sm font-bold uppercase underline">Miami, Florida</p>
-                </div>
+        <div id="movies-grid" class="shelf-content hidden grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div class="aspect-[2/3] bg-black text-white p-4 flex items-center justify-center text-center uppercase font-bold text-[10px]">
+                Movie Content Here
             </div>
+        </div>
 
-            <div id="essays-grid" class="shelf-content space-y-8">
-                <div class="border-b border-dotted border-[#2d5a27] pb-6">
-                    <p class="text-sm font-bold uppercase underline">1,000 True Fans</p>
-                    <p class="text-[10px] opacity-50 uppercase mt-1">Kevin Kelly · The Technium</p>
-                    <p class="text-xs mt-3 leading-relaxed opacity-80">The essay that launched a thousand creator economies.</p>
-                </div>
+        <div id="travel-grid" class="shelf-content hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="border border-[#2d5a27] p-6">
+                <p class="text-[10px] opacity-40 font-bold uppercase mb-1">2024</p>
+                <p class="text-sm font-bold uppercase">Miami, Florida</p>
+            </div>
+        </div>
+
+        <div id="essays-grid" class="shelf-content hidden space-y-8">
+            <div class="border-b border-dotted border-[#2d5a27] pb-6">
+                <p class="text-sm font-bold uppercase underline">1,000 True Fans</p>
+                <p class="text-[10px] opacity-50 uppercase mt-1">Kevin Kelly · The Technium</p>
             </div>
         </div>
     </section>
 
-    <script>
-        function switchTab(shelfId) {
-            // 1. Reset all tabs to inactive
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('nav-tab-active'));
-            
-            // 2. Hide all grids
-            document.querySelectorAll('.shelf-content').forEach(g => g.classList.remove('active'));
-
-            // 3. Activate the chosen one
-            document.getElementById('tab-' + shelfId).classList.add('nav-tab-active');
-            document.getElementById(shelfId + '-grid').classList.add('active');
-
-            // 4. Update the label count
-            const labels = { 'books': '131 BOOKS', 'movies': '42 MOVIES', 'travel': '12 LOGS', 'essays': '6 ESSAYS' };
-            document.getElementById('item-count').innerText = labels[shelfId];
-        }
-    </script>
+    <script src="Script.js"></script>
 </body>
 </html>
