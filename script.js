@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. Element Selectors ---
     const tabs = document.querySelectorAll('.nav-tab');
     const grids = document.querySelectorAll('.shelf-content');
     const itemCount = document.getElementById('item-count');
@@ -7,15 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterAllBtn = document.getElementById('filter-all');
     const filterCoreBtn = document.getElementById('filter-core');
 
-    let currentMode = 'all'; // Tracks if the user selected 'all' or 'core'
+    let currentMode = 'all'; 
 
-    // --- 2. Master Filter Engine (Search + Core) ---
     function applyFilters() {
         const query = searchInput.value.toLowerCase();
         const activeTab = document.querySelector('.nav-tab-active').getAttribute('data-shelf');
         const activeGrid = document.getElementById(`${activeTab}-grid`);
-        
-        // Target items in the active grid (Books, Movies, etc.)
         const items = activeGrid ? activeGrid.querySelectorAll('.shelf-item') : [];
         
         let visibleCount = 0;
@@ -24,10 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const title = (item.getAttribute('data-title') || "").toLowerCase();
             const desc = (item.getAttribute('data-description') || "").toLowerCase();
             
-            // Check if the item is "Core" by looking for the symbol div inside it
-            const isCore = item.querySelector('.absolute.top-2.right-2') !== null;
+            // NEW FIX: Check for the data-core="true" attribute
+            const isCore = item.getAttribute('data-core') === 'true';
 
-            // Logic: Must match the text search AND the core/all toggle
             const matchesSearch = title.includes(query) || desc.includes(query);
             const matchesToggle = (currentMode === 'all') || (currentMode === 'core' && isCore);
 
@@ -39,97 +34,68 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Update the item count display dynamically
         if (itemCount) {
             itemCount.innerText = `${visibleCount} ${activeTab.toUpperCase()}`;
         }
     }
 
-    // --- 3. Tab Switching Logic ---
+    // Tab Logic
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             tabs.forEach(t => t.classList.remove('nav-tab-active'));
             tab.classList.add('nav-tab-active');
-            
-            grids.forEach(grid => grid.classList.add('hidden'));
+            grids.forEach(g => g.classList.add('hidden'));
             const target = tab.getAttribute('data-shelf');
-            const targetGrid = document.getElementById(`${target}-grid`);
-            if (targetGrid) targetGrid.classList.remove('hidden');
-
-            // Reset search input when switching tabs for a clean view
+            if(document.getElementById(`${target}-grid`)) {
+                document.getElementById(`${target}-grid`).classList.remove('hidden');
+            }
             searchInput.value = "";
             applyFilters();
         });
     });
 
-    // --- 4. Search Input Listener ---
+    // Search Logic
     searchInput.addEventListener('input', applyFilters);
 
-    // --- 5. Core Filter Toggle Buttons ---
+    // Core Filter Logic
     filterAllBtn.addEventListener('click', () => {
         currentMode = 'all';
-        // Update UI colors
-        filterAllBtn.classList.add('bg-[#2d5a27]', 'text-white');
-        filterAllBtn.classList.remove('border');
-        filterCoreBtn.classList.remove('bg-[#2d5a27]', 'text-white');
-        filterCoreBtn.classList.add('border', 'border-[#2d5a27]');
+        filterAllBtn.className = "px-3 py-1 bg-[#2d5a27] text-white transition-colors";
+        filterCoreBtn.className = "px-3 py-1 border border-[#2d5a27] hover:bg-[#2d5a27] hover:text-white transition-colors";
         applyFilters();
     });
 
     filterCoreBtn.addEventListener('click', () => {
         currentMode = 'core';
-        // Update UI colors
-        filterCoreBtn.classList.add('bg-[#2d5a27]', 'text-white');
-        filterCoreBtn.classList.remove('border');
-        filterAllBtn.classList.remove('bg-[#2d5a27]', 'text-white');
-        filterAllBtn.classList.add('border', 'border-[#2d5a27]');
+        filterCoreBtn.className = "px-3 py-1 bg-[#2d5a27] text-white transition-colors";
+        filterAllBtn.className = "px-3 py-1 border border-[#2d5a27] hover:bg-[#2d5a27] hover:text-white transition-colors";
         applyFilters();
     });
 
-    // --- 6. Modal (Pop-up) Logic ---
+    // Modal Logic
     const modal = document.getElementById('details-modal');
-    const modalImg = document.getElementById('modal-img');
-    const modalImgContainer = document.getElementById('modal-img-container');
-    const modalTitle = document.getElementById('modal-title');
-    const modalDesc = document.getElementById('modal-desc');
-    const closeBtn = document.getElementById('close-modal');
-
     document.addEventListener('click', (e) => {
         const item = e.target.closest('.shelf-item');
         if (item) {
+            document.getElementById('modal-title').innerText = item.getAttribute('data-title') || "Untitled";
+            document.getElementById('modal-desc').innerText = item.getAttribute('data-description') || "";
             const img = item.querySelector('img');
-            const title = item.getAttribute('data-title');
-            const desc = item.getAttribute('data-description');
-
+            const imgCont = document.getElementById('modal-img-container');
             if (img) {
-                modalImg.src = img.src;
-                modalImgContainer.style.display = 'block';
+                document.getElementById('modal-img').src = img.src;
+                imgCont.style.display = 'block';
             } else {
-                modalImgContainer.style.display = 'none'; 
+                imgCont.style.display = 'none';
             }
-
-            modalTitle.innerText = title || "Untitled";
-            modalDesc.innerText = desc || "No description available.";
-            
             modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; 
+            document.body.style.overflow = 'hidden';
         }
     });
 
-    const closeModal = () => {
+    document.getElementById('close-modal').onclick = () => {
         modal.classList.add('hidden');
         document.body.style.overflow = 'auto';
     };
 
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-    
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
-    });
-
-    // Run filters once on page load to set the initial count
-    applyFilters();
+    applyFilters(); // Run on load
 });
